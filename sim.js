@@ -34,55 +34,62 @@ function sortPoints() {
 }
 
 function simulateRaces(numRaces) {
+
+  //add the teams to the racePoints array
+  teams.forEach(function(team, i){
+    racePoints.push({
+      name: team.name,
+      points: []
+    });
+  });
+
+  //run some races
   for (i = 0; i < numRaces; i++) {
     //create a race element in the races array
-    races[i] = [];
-    racePoints[i] = [];
+    race = [];
     //loop through each team
     teams.forEach(function(team) {
-      racePoints[i].push({
-        team: team.name,
-        points: 0
-      });
       //loop through each runner on each team
       team.runners.forEach(function(r) {
         //create normal random value for their race
         let raceTime = gaussian(r.totalSeconds, 10).ppf(Math.random());
         //insert the racetime into the current race with team name
-        races[i].push({
+        race.push({
           team: team.name,
           time: raceTime
         });
       });
     });
+
+    //the race is complete, sort the runners
+    race.sort(compareTimes);
+
+    let rp = racePoints.slice();
+
+    //find the positions for each runner of the race
+    race.forEach(function(runner,i){
+      let team = rp.find(function(t){return t.name === runner.team;});
+      team.points.push(i+1);
+    });
+
+    //create totals of points for each race to add to the teams
+    rp.forEach(function(school){
+      //reset the sum to 0
+      let sum = 0;
+      //iterate through each school that ran and total the points
+      school.points.forEach(function(p){
+        sum += p;
+      });
+      //find the team for the current school
+      let t = teams.find(function(t){return t.name === school.name;});
+      //if the team doesn't have points, add it
+      if(!t.points)
+        t.points = [];
+      //push the school's points for this race to the team
+      t.points.push(sum);
+    });
+
   }
-}
-
-function getPoints() {
-  //total up the points for each team depending on the
-  //rankings of the runners, stores it into the
-  //racePoints array
-  races.forEach(function(race, i) {
-    race.forEach(function(runner, j) {
-      racePoints[i].forEach(function(p) {
-        if (p.team === runner.team)
-          p.points += (j + 1);
-      });
-    });
-  });
-
-  sortPoints();
-
-  teams.forEach(function(team) {
-    racePlaces[team.name] = [];
-    racePoints.forEach(function(school) {
-      school.forEach(function(s, i){
-        if (s.team === team.name) {
-          racePlaces[team.name].push(i);
-        }
-      });
-    });
-  });
 }
 
 function makeTable() {
@@ -103,7 +110,7 @@ function makeTable() {
 
 $('button#run').click(function() {
   //run races
-  simulateRaces(1000);
+  simulateRaces(10000);
   sortRaces();
   getPoints();
 });
@@ -133,10 +140,10 @@ $('button#addTeam').click(function() {
     runners: runners
   };
   teams.push(team);
-  racePoints.push({
-    name: teamName,
-    points: 0
-  });
+  // racePoints.push({
+  //   name: teamName,
+  //   points: 0
+  // });
   makeTable();
 });
 
