@@ -103,7 +103,7 @@ function makeTable() {
 
 $('button#run').click(function() {
   //run races
-  simulateRaces(1000);
+  simulateRaces(10000);
   sortRaces();
   getPoints();
 });
