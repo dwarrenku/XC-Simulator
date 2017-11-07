@@ -39,6 +39,7 @@ function simulateRaces(numRaces) {
   teams.forEach((team, j) => {
     teamNames.push(team.name);
     racePoints[j] = [];
+    racePlaces[j] = [];
   });
 
   //run some races
@@ -73,7 +74,36 @@ function simulateRaces(numRaces) {
       racePoints[teamNames.indexOf(runner.team)][i] += (j + 1);
     });
   }
+
+    //figure out the place of each team in each race
+    for(let c = 0; c < racePoints[0].length; c++){
+      let places = [];
+      //racePlaces[c] = [];
+      for(let r = 0; r < racePoints.length; r++){
+        places.push(racePoints[r][c]);
+      }
+      sortWithIndices(places).sortIndices.forEach((i, place)=>{
+        racePlaces[i].push(place+1);
+      });
+    }
 }
+
+//takes an array and then sorts it, returns an array with indexs of original array sorted
+function sortWithIndices(toSort) {
+  for (var i = 0; i < toSort.length; i++) {
+    toSort[i] = [toSort[i], i];
+  }
+  toSort.sort(function(left, right) {
+    return left[0] < right[0] ? -1 : 1;
+  });
+  toSort.sortIndices = [];
+  for (var j = 0; j < toSort.length; j++) {
+    toSort.sortIndices.push(toSort[j][1]);
+    //toSort[j] = toSort[j][0];
+  }
+  return toSort;
+}
+
 
 function makeTable() {
   $('.times').empty();
@@ -91,7 +121,7 @@ function makeTable() {
   $('.times').append(row);
 }
 
-function displayResults() {
+function displayPoints() {
   var data = [];
   teams.forEach((team, j) => {
     data.push({
@@ -121,11 +151,42 @@ function displayResults() {
   Plotly.newPlot('results', data, layout);
 }
 
+function displayPlaces() {
+  var data = [];
+  teams.forEach((team, j) => {
+    data.push({
+      x: racePlaces[j],
+      name: team.name,
+      histnorm: "count",
+      autbinx: true,
+      type: "histogram",
+      opacity: 0.6,
+      marker: {
+        color : '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6)
+      }
+    });
+  });
+  var layout = {
+    bargap: 0.05,
+    bargroupgap: 0.2,
+    barmode: "overlay",
+    title: "Race Results",
+    xaxis: {
+      title: "race points (fewer the better)"
+    },
+    yaxis: {
+      title: "frequency"
+    }
+  };
+  Plotly.newPlot('points', data, layout);
+}
+
 $('button#run').click(function() {
   //run races
   let trials = $('#numTrials').val();
   simulateRaces(trials);
-  displayResults();
+  displayPoints();
+  displayPlaces();
 });
 
 $('button#addTeam').click(function() {
