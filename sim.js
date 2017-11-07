@@ -130,10 +130,7 @@ function displayPoints() {
       histnorm: "count",
       autbinx: true,
       type: "histogram",
-      opacity: 0.6,
-      marker: {
-        color : '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6)
-      }
+      opacity: 0.6
     });
   });
   var layout = {
@@ -160,10 +157,7 @@ function displayPlaces() {
       histnorm: "count",
       autbinx: true,
       type: "histogram",
-      opacity: 0.6,
-      marker: {
-        color : '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6)
-      }
+      opacity: 0.6
     });
   });
   var layout = {
