@@ -34,13 +34,11 @@ function sortPoints() {
 }
 
 function simulateRaces(numRaces) {
-
-  //add the teams to the racePoints array
-  teams.forEach(function(team, i){
-    racePoints.push({
-      name: team.name,
-      points: []
-    });
+  //pull out the team names from the table
+  let teamNames = [];
+  teams.forEach((team, j) => {
+    teamNames.push(team.name);
+    racePoints[j] = [];
   });
 
   //run some races
@@ -64,31 +62,16 @@ function simulateRaces(numRaces) {
     //the race is complete, sort the runners
     race.sort(compareTimes);
 
-    let rp = racePoints.slice();
-
-    //find the positions for each runner of the race
-    race.forEach(function(runner,i){
-      let team = rp.find(function(t){return t.name === runner.team;});
-      team.points.push(i+1);
+    //set all points to 0 for this race
+    racePoints.forEach((r) => {
+      r[i] = 0;
     });
 
-    //create totals of points for each race to add to the teams
-    rp.forEach(function(school){
-      //reset the sum to 0
-      let sum = 0;
-      //iterate through each school that ran and total the points
-      school.points.forEach(function(p){
-        sum += p;
-      });
-      //find the team for the current school
-      let t = teams.find(function(t){return t.name === school.name;});
-      //if the team doesn't have points, add it
-      if(!t.points)
-        t.points = [];
-      //push the school's points for this race to the team
-      t.points.push(sum);
+    //add the position of the runner to the team's array in racePoints
+    race.forEach((runner, j) => {
+      //adds the place for this runner to the team's points for this race (i)
+      racePoints[teamNames.indexOf(runner.team)][i] += (j + 1);
     });
-
   }
 }
 
@@ -108,11 +91,41 @@ function makeTable() {
   $('.times').append(row);
 }
 
+function displayResults() {
+  var data = [];
+  teams.forEach((team, j) => {
+    data.push({
+      x: racePoints[j],
+      name: team.name,
+      histnorm: "count",
+      autbinx: true,
+      type: "histogram",
+      opacity: 0.6,
+      marker: {
+        color : '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6)
+      }
+    });
+  });
+  var layout = {
+    bargap: 0.05,
+    bargroupgap: 0.2,
+    barmode: "overlay",
+    title: "Race Results",
+    xaxis: {
+      title: "race points (fewer the better)"
+    },
+    yaxis: {
+      title: "frequency"
+    }
+  };
+  Plotly.newPlot('results', data, layout);
+}
+
 $('button#run').click(function() {
   //run races
-  simulateRaces(10000);
-  sortRaces();
-  getPoints();
+  let trials = $('#numTrials').val();
+  simulateRaces(trials);
+  displayResults();
 });
 
 $('button#addTeam').click(function() {
@@ -140,10 +153,7 @@ $('button#addTeam').click(function() {
     runners: runners
   };
   teams.push(team);
-  // racePoints.push({
-  //   name: teamName,
-  //   points: 0
-  // });
+  racePoints.push([]);
   makeTable();
 });
 

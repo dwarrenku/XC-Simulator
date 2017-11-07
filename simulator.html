@@ -2,158 +2,197 @@
 <html lang="en">
 
 <head>
-  <title>Hello, world!</title>
+  <title>XC Race Simulator</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
   <!-- Plotly JS -->
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 
 <body>
   <div class="container">
-
-    <form>
-      <div class="form-group">
-        <div class="row">
-          <div class="col-xs-2">
-            <label for="teamName">Team name</label>
-          </div>
-          <div class="col-sm-4">
-            <input type="text" name="teamName" value="">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-2">
-            <label for="runner1">Runner 1</label>
-          </div>
-          <div class="col-xs-2">
-            <input type="number" class="form-control form-control-sm minutes" name="runner1min" min="0" max="59" value="" placeholder="min">
-          </div>
-          <div class="col-xs-2">
-            <input type="number" class="form-control form-control-sm seconds" name="runner1sec" min="0" max="59" value="" placeholder="sec">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-2">
-            <label for="runner2">Runner 2</label>
-          </div>
-          <div class="col-xs-2">
-            <input type="number" class="form-control form-control-sm minutes" name="runner2min" min="0" max="59" value="" placeholder="min">
-          </div>
-          <div class="col-xs-2">
-            <input type="number" class="form-control form-control-sm seconds" name="runner2sec" min="0" max="59" value="" placeholder="sec">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-2">
-            <label for="runner3">Runner 3</label>
-          </div>
-          <div class="col-xs-2">
-            <input type="number" class="form-control form-control-sm minutes" name="runner3min" min="0" max="59" value="" placeholder="min">
-          </div>
-          <div class="col-xs-2">
-            <input type="number" class="form-control form-control-sm seconds" name="runner3sec" min="0" max="59" value="" placeholder="sec">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-2">
-            <label for="runner4">Runner 4</label>
-          </div>
-          <div class="col-xs-2">
-            <input type="number" class="form-control form-control-sm minutes" name="runner4min" min="0" max="59" value="" placeholder="min">
-          </div>
-          <div class="col-xs-2">
-            <input type="number" class="form-control form-control-sm seconds" name="runner4sec" min="0" max="59" value="" placeholder="sec">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-2">
-            <label for="runner5">Runner 5</label>
-          </div>
-          <div class="col-xs-2">
-            <input type="number" class="form-control form-control-sm minutes" name="runner5min" min="0" max="59" value="" placeholder="min">
-          </div>
-          <div class="col-xs-2">
-            <input type="number" class="form-control form-control-sm seconds" name="runner5sec" min="0" max="59" value="" placeholder="sec">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-2">
-            <label for="runner6">Runner 6</label>
-          </div>
-          <div class="col-xs-2">
-            <input type="number" class="form-control form-control-sm minutes" name="runner6min" min="0" max="59" value="" placeholder="min">
-          </div>
-          <div class="col-xs-2">
-            <input type="number" class="form-control form-control-sm seconds" name="runner6sec" min="0" max="59" value="" placeholder="sec">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-2">
-            <label for="runner7">Runner 7</label>
-          </div>
-          <div class="col-xs-2">
-            <input type="number" class="form-control form-control-sm minutes" name="runner7min" min="0" max="59" value="" placeholder="min">
-          </div>
-          <div class="col-xs-2">
-            <input type="number" class="form-control form-control-sm seconds" name="runner7sec" min="0" max="59" value="" placeholder="sec">
-          </div>
-        </div>
-
-      </div>
-    </form>
-
-    <button type="button" id="addTeam">add a team</button>
-    <button type="button" id="run">run</button>
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Team Name</th>
-          <th scope="col">Runner 1 time</th>
-          <th scope="col">Runner 2 time</th>
-          <th scope="col">Runner 3 time</th>
-          <th scope="col">Runner 4 time</th>
-          <th scope="col">Runner 5 time</th>
-          <th scope="col">Runner 6 time</th>
-          <th scope="col">Runner 7 time</th>
-        </tr>
-      </thead>
-      <tbody class="times">
-
-      </tbody>
-    </table>
     <div class="row">
-      <div class="col-xs-4">
-        <input type="text" name="fileName" value="" placeholder="file name">
+      <h1 class="display-1 text-center">XC Simulator</h1>
+    </div>
+
+    <div class="row">
+      <div class="col-4-md p-2">
+        <button type="button" class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+          Add Teams
+        </button>
       </div>
-      <div class="col-xs-4">
-        <button type="button" id="saveTeams">save</button>
+
+      <div class="col-4-md p-2">
+        <button type="button" class="btn btn-primary" data-toggle="collapse" href="#loadSave" aria-expanded="false" aria-controls="loadSave">Load / Save Teams</button>
       </div>
-      <div class="col-xs-2">
-        <p id="saveLink">
-        </p>
+
+      <div class="col-4-md p-2">
+        <div class="input-group">
+          <input type="text" id="numTrials" class="form-control" placeholder="# of Trials" aria-label="# of Trials">
+          <span class="input-group-btn">
+            <button class="btn btn-danger" type="button" id="run">Go!</button>
+          </span>
+        </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-3">
-        <input type="file" id="loadTeams">load teams
+
+    <div class="collapse" id="collapseExample">
+      <div class="card card-body">
+        <form>
+          <div class="form-group">
+            <div class="form-row form-group">
+              <div class="col-sm-4">
+                <input type="text" name="teamName" value="" placeholder="team name">
+              </div>
+            </div>
+            <div class="form-row form-group">
+              <div class="col-xs-2">
+                <label for="runner1">Runner 1</label>
+              </div>
+              <div class="col-xs-2">
+                <input type="number" class="form-control form-control-sm minutes" name="runner1min" min="0" max="59" value="" placeholder="min">
+              </div>
+              <div class="col-xs-2">
+                <input type="number" class="form-control form-control-sm seconds" name="runner1sec" min="0" max="59" value="" placeholder="sec">
+              </div>
+            </div>
+            <div class="form-row form-group">
+              <div class="col-xs-2">
+                <label for="runner2">Runner 2</label>
+              </div>
+              <div class="col-xs-2">
+                <input type="number" class="form-control form-control-sm minutes" name="runner2min" min="0" max="59" value="" placeholder="min">
+              </div>
+              <div class="col-xs-2">
+                <input type="number" class="form-control form-control-sm seconds" name="runner2sec" min="0" max="59" value="" placeholder="sec">
+              </div>
+            </div>
+            <div class="form-row form-group">
+              <div class="col-xs-2">
+                <label for="runner3">Runner 3</label>
+              </div>
+              <div class="col-xs-2">
+                <input type="number" class="form-control form-control-sm minutes" name="runner3min" min="0" max="59" value="" placeholder="min">
+              </div>
+              <div class="col-xs-2">
+                <input type="number" class="form-control form-control-sm seconds" name="runner3sec" min="0" max="59" value="" placeholder="sec">
+              </div>
+            </div>
+            <div class="form-row form-group">
+              <div class="col-xs-2">
+                <label for="runner4">Runner 4</label>
+              </div>
+              <div class="col-xs-2">
+                <input type="number" class="form-control form-control-sm minutes" name="runner4min" min="0" max="59" value="" placeholder="min">
+              </div>
+              <div class="col-xs-2">
+                <input type="number" class="form-control form-control-sm seconds" name="runner4sec" min="0" max="59" value="" placeholder="sec">
+              </div>
+            </div>
+            <div class="form-row form-group">
+              <div class="col-xs-2">
+                <label for="runner5">Runner 5</label>
+              </div>
+              <div class="col-xs-2">
+                <input type="number" class="form-control form-control-sm minutes" name="runner5min" min="0" max="59" value="" placeholder="min">
+              </div>
+              <div class="col-xs-2">
+                <input type="number" class="form-control form-control-sm seconds" name="runner5sec" min="0" max="59" value="" placeholder="sec">
+              </div>
+            </div>
+            <div class="form-row form-group">
+              <div class="col-xs-2">
+                <label for="runner6">Runner 6</label>
+              </div>
+              <div class="col-xs-2">
+                <input type="number" class="form-control form-control-sm minutes" name="runner6min" min="0" max="59" value="" placeholder="min">
+              </div>
+              <div class="col-xs-2">
+                <input type="number" class="form-control form-control-sm seconds" name="runner6sec" min="0" max="59" value="" placeholder="sec">
+              </div>
+            </div>
+            <div class="form-row form-group">
+              <div class="col-xs-2">
+                <label for="runner7">Runner 7</label>
+              </div>
+              <div class="col-xs-2">
+                <input type="number" class="form-control form-control-sm minutes" name="runner7min" min="0" max="59" value="" placeholder="min">
+              </div>
+              <div class="col-xs-2">
+                <input type="number" class="form-control form-control-sm seconds" name="runner7sec" min="0" max="59" value="" placeholder="sec">
+              </div>
+            </div>
+            <div class="col-6-md">
+              <button type="button" class="btn btn-primary" id="addTeam">add a team</button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
-    
+
+    <!-- save and load teams -->
+    <div class="collapse" id="loadSave">
+      <div class="card card-body">
+        <h3>Save teams:</h3>
+        <div class="col-lg-6">
+          <div class="input-group">
+            <input type="text" name="fileName" class="form-control" placeholder="Save as..." aria-label="Save as...">
+            <span class="input-group-btn">
+              <button class="btn btn-secondary" type="button" id="saveTeams">Save</button>
+            </span>
+          </div>
+          <div class="col-xs-2">
+            <p id="saveLink">
+            </p>
+          </div>
+        </div>
+
+        <h3>Load teams:</h3>
+        <div class="col-lg-6">
+          <label class="custom-file">
+            <input type="file" id="loadTeams" class="custom-file-input" required>
+            <span class="custom-file-control"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <table class="table text-center">
+        <thead>
+          <tr>
+            <th scope="col">Team Name</th>
+            <th scope="col">Runner 1</th>
+            <th scope="col">Runner 2</th>
+            <th scope="col">Runner 3</th>
+            <th scope="col">Runner 4</th>
+            <th scope="col">Runner 5</th>
+            <th scope="col">Runner 6</th>
+            <th scope="col">Runner 7</th>
+          </tr>
+        </thead>
+        <tbody class="times">
+
+        </tbody>
+      </table>
+    </div>
+
+
+
     <div id="results" style="width:100%;height:500px;"></div>
-  </div>
 
+  </div>
 
 </body>
 <script src="sim.js"></script>
