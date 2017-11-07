@@ -34,55 +34,45 @@ function sortPoints() {
 }
 
 function simulateRaces(numRaces) {
+  //pull out the team names from the table
+  let teamNames = [];
+  teams.forEach((team, j) => {
+    teamNames.push(team.name);
+    racePoints[j] = [];
+  });
+
+  //run some races
   for (i = 0; i < numRaces; i++) {
     //create a race element in the races array
-    races[i] = [];
-    racePoints[i] = [];
+    race = [];
     //loop through each team
     teams.forEach(function(team) {
-      racePoints[i].push({
-        team: team.name,
-        points: 0
-      });
       //loop through each runner on each team
       team.runners.forEach(function(r) {
         //create normal random value for their race
         let raceTime = gaussian(r.totalSeconds, 10).ppf(Math.random());
         //insert the racetime into the current race with team name
-        races[i].push({
+        race.push({
           team: team.name,
           time: raceTime
         });
       });
     });
+
+    //the race is complete, sort the runners
+    race.sort(compareTimes);
+
+    //set all points to 0 for this race
+    racePoints.forEach((r) => {
+      r[i] = 0;
+    });
+
+    //add the position of the runner to the team's array in racePoints
+    race.forEach((runner, j) => {
+      //adds the place for this runner to the team's points for this race (i)
+      racePoints[teamNames.indexOf(runner.team)][i] += (j + 1);
+    });
   }
-}
-
-function getPoints() {
-  //total up the points for each team depending on the
-  //rankings of the runners, stores it into the
-  //racePoints array
-  races.forEach(function(race, i) {
-    race.forEach(function(runner, j) {
-      racePoints[i].forEach(function(p) {
-        if (p.team === runner.team)
-          p.points += (j + 1);
-      });
-    });
-  });
-
-  sortPoints();
-
-  teams.forEach(function(team) {
-    racePlaces[team.name] = [];
-    racePoints.forEach(function(school) {
-      school.forEach(function(s, i){
-        if (s.team === team.name) {
-          racePlaces[team.name].push(i);
-        }
-      });
-    });
-  });
 }
 
 function makeTable() {
@@ -101,11 +91,41 @@ function makeTable() {
   $('.times').append(row);
 }
 
+function displayResults() {
+  var data = [];
+  teams.forEach((team, j) => {
+    data.push({
+      x: racePoints[j],
+      name: team.name,
+      histnorm: "count",
+      autbinx: true,
+      type: "histogram",
+      opacity: 0.6,
+      marker: {
+        color : '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6)
+      }
+    });
+  });
+  var layout = {
+    bargap: 0.05,
+    bargroupgap: 0.2,
+    barmode: "overlay",
+    title: "Race Results",
+    xaxis: {
+      title: "race points (fewer the better)"
+    },
+    yaxis: {
+      title: "frequency"
+    }
+  };
+  Plotly.newPlot('results', data, layout);
+}
+
 $('button#run').click(function() {
   //run races
-  simulateRaces(10000);
-  sortRaces();
-  getPoints();
+  let trials = $('#numTrials').val();
+  simulateRaces(trials);
+  displayResults();
 });
 
 $('button#addTeam').click(function() {
@@ -133,10 +153,7 @@ $('button#addTeam').click(function() {
     runners: runners
   };
   teams.push(team);
-  racePoints.push({
-    name: teamName,
-    points: 0
-  });
+  racePoints.push([]);
   makeTable();
 });
 
